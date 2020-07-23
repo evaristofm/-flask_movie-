@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>List Movies: </h3>
+<br>
+
+<br>
+    {% for movie in movies %}
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Movie: {{ movie.name }}</h5>
+              <p class="card-text">Theme: {{ movie.theme }}</p>
+              <a href="{{url_for('add_like', name=movie.name )}}"><i class="fas fa-thumbs-up"></i></a> {{movie.like}}
+        <a href="{{url_for('remove_like', name=movie.name )}}"><i class="fas fa-thumbs-down"></i></a> {{movie.dislike}}
+            </div>
+          </div>
+        </div>
+      </div>
+        {% endfor%}
+
+<br>
+<br>
+<br>
+
+   <h3>Add Movies</h3>
+<form action="{{ url_for('movie_add')}}" method="POST">
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Movie:</label>
+        <input type="text" name="name" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Theme:</label>
+        <input type="text" name="theme" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-info">add</button>
+</form>
+
+{% endblock %}
+

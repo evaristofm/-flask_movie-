@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>Ranked Themes</h3>
+<table class="table table-striped mt-3">
+    <tr>
+        <th>Theme</th>
+        <th>Ponts</th>
+        
+    </tr>
+    {% for t in themes %}
+    <tr>
+        <td>{{ t.theme }}</td>
+        <td>{{t.like }}</td>
+    {% endfor%}
+    </ol>
+</table>
+
+
+{% endblock %}
+
