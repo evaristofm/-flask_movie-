@@ -1,7 +1,7 @@
 from flask import Flask, render_template,request,redirect,url_for
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-import json
+
 
 
 cluster = MongoClient("mongodb+srv://admin:admin@cluster0-4lzge.mongodb.net/movie?retryWrites=true&w=majority")
@@ -25,15 +25,15 @@ def movie_add():
     collection.insert({"_id": ObjectId(),"name": name, "theme": theme, "like": 0, "dislike": 0})
     return redirect(url_for('get_movies'))
 
-@app.route("/movie/like/<name>")
-def add_like(name):
+@app.route("/movie/thumbs_up/<name>")
+def thumbs_up(name):
     movie = collection.update_one(
         {"name": name}, {"$inc": {"like": +1}}
     )
     return redirect(url_for('get_movies'))
 
-@app.route("/movie/remove/<name>")
-def remove_like(name):
+@app.route("/movie/thumbs_down/<name>")
+def thumbs_down(name):
     movie = collection.update_one(
         {"name": name}, {"$inc": {"dislike": +1}}
     )
@@ -41,5 +41,18 @@ def remove_like(name):
 
 @app.route("/list/themes")
 def list_themes():
-    themes = collection.find().sort([("like", -1)])
-    return render_template("list_themes.html", themes=themes)
+    gru = collection.aggregate(
+    [
+        {"$match": {} },
+        {"$group": {"_id": "$theme",
+        "Like_total": {"$sum": "$like"},
+        "Dislike_total": {"$sum": "$dislike"}}},
+        {"$project": {
+            "media": {"$subtract": ["$Like_total", {"$divide": ["$Dislike_total", 2]}]}
+        }},
+        {"$sort": {"media": -1}}
+        
+    ]
+)
+
+    return render_template("list_themes.html", gru=gru)

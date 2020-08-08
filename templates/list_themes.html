@@ -9,10 +9,10 @@
         <th>Ponts</th>
         
     </tr>
-    {% for t in themes %}
+    {% for g in gru %}
     <tr>
-        <td>{{ t.theme }}</td>
-        <td>{{t.like }}</td>
+        <td>{{g["_id"]}}</td>
+        <td>{{g["media"]}}</td>
     {% endfor%}
     </ol>
 </table>

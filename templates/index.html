@@ -13,8 +13,8 @@
             <div class="card-body">
               <h5 class="card-title">Movie: {{ movie.name }}</h5>
               <p class="card-text">Theme: {{ movie.theme }}</p>
-              <a href="{{url_for('add_like', name=movie.name )}}"><i class="fas fa-thumbs-up"></i></a> {{movie.like}}
-        <a href="{{url_for('remove_like', name=movie.name )}}"><i class="fas fa-thumbs-down"></i></a> {{movie.dislike}}
+              <a href="{{url_for('thumbs_up', name=movie.name )}}"><i class="fas fa-thumbs-up"></i></a> {{movie.like}}
+        <a href="{{url_for('thumbs_down', name=movie.name )}}"><i class="fas fa-thumbs-down"></i></a> {{movie.dislike}}
             </div>
           </div>
         </div>
